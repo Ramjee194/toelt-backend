@@ -11,6 +11,8 @@ import user from '../models/userSchema'
       process.env.JWT_SECRET,
       { expiresIn: "7d" }
     );
+
+
 //verify token
 
 jwt.verify(token,"secretkey",(err,decoded)=>{

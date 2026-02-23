@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 
+const options = { discriminatorKey: "role" };
 
 const userSchema = new mongoose.Schema({
     name:{
@@ -23,7 +24,9 @@ const userSchema = new mongoose.Schema({
         default:"user"
     },
     
-},{timestamps:true},);
+},{timestamps:true},options);
 
 const User = mongoose.model("User",userSchema);
+const Admin = User.discriminator("admin", new mongoose.Schema({}));
+const Owner = User.discriminator("owner", new mongoose.Schema({}));
 export default User;

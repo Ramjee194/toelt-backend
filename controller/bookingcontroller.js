@@ -32,7 +32,9 @@ export const createBooking = async (req,res) =>{
     await booking.save();
 
     
-return res.status(200).json({message:"booking created succesfully"});
+return res.status(200).json({
+  success:true,
+  message:"booking created succesfully"});
     }
 catch(error){
     console.error(error)
@@ -57,6 +59,7 @@ catch(error){
     await Booking.findByIdAndDelete(id);
 
     return res.status(200).json({
+      success:true,
       message: "Booking cancelled successfully"
     });
 
