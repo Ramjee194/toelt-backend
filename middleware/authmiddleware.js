@@ -2,36 +2,25 @@ import jwt from "jsonwebtoken";
 
 export const authMiddleware = (req, res, next) => {
   try {
-    // Check if authorization header exists
     const authHeader = req.headers.authorization;
-    console.log(authHeader)
 
     if (!authHeader || !authHeader.startsWith("Bearer ")) {
       return res.status(401).json({ message: "Token missing" });
     }
 
- 
-  
-    // Verify token
-    const decoded = jwt.verify(token, "secretkey");
-    console.log(decoded)
+    // ✅ Extract token
+    const token = authHeader.split(" ")[1];
 
-  
+    // ✅ Verify using SAME secret as login
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-    // Attach user data to request
+    console.log("DECODED:", decoded);
+
     req.user = decoded;
 
     next();
   } catch (error) {
+    console.log(error);
     return res.status(401).json({ message: "Invalid or expired token" });
-  }
-};
-
-//optional admin check middleware
-export const verifyAdmin = (req, res, next) => {
-  if (req.user && req.user.role === 'admin') {
-    next();
-  } else {
-    return res.status(403).json({ message: "Admin access required" });
   }
 };

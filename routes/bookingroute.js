@@ -4,11 +4,13 @@ import {
   createlisting, 
   deletelisting, 
   getAllListings,  getApprovedListings,  // Import the new function
-  getListingById,  getOwnerListings,  getPendingListing,  // Optional: if you want single listing view
+  getListingById,  getOwnerListings,  getPendingListing,   // Optional: if you want single listing view
   ownerCheck, 
   updatelisting, 
-  updateListingStatus
+  updateListingStatus,
+  visitlisting
 } from '../controller/listingController.js';
+import { authMiddleware } from '../middleware/authmiddleware.js';
 
 const bookingroutes = express.Router();
 
@@ -17,10 +19,12 @@ bookingroutes.post("/bookings", createBooking);
 bookingroutes.delete("/bookings/:id", cancelbooking);
 
 // Listing routes
-bookingroutes.get("/listings", getAllListings);           
-bookingroutes.get("/listings/:id", getListingById,); 
+bookingroutes.get("/listings", getAllListings,visitlisting);           
+bookingroutes.get("/listings/:id", getListingById); 
+bookingroutes.post("/listings/:id/visit",visitlisting)
 
-bookingroutes.post("/listings", createlisting);           
+bookingroutes.post("/listings",authMiddleware, createlisting); 
+console.log("AUTH MIDDLEWARE RUNNING");          
 bookingroutes.post("/owner", ownerCheck)                   
 bookingroutes.put("/listings/:id", updatelisting);        
 bookingroutes.delete("/listings/:id", deletelisting); 
