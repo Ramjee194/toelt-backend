@@ -53,12 +53,11 @@ const listingSchema = new mongoose.Schema({
   },
   
 
-
-  selectedAmenities:{
-    type:[String],
-    enum:["Parking","Gym","24*7","Powerbackup","Lift","Swimmingpool","Garden","Playground","CCTV","Water Supply","Internet/Wifi","Air-Conditioning"],
-    default:[],
-  },
+selectedAmenities:{
+  type:[String],
+  enum:["Parking","Gym","24*7","Powerbackup","Lift","Swimmingpool","Garden","Playground","CCTV","Water Supply","Internet/Wifi","Air-Conditioning"],
+  default:[],
+},
 
  
   roomType: {

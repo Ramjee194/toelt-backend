@@ -8,6 +8,7 @@ import bookingroutes from "./routes/bookingroute.js";
 import cors from "cors";
 import { ownerform } from "./controller/ownerformcontroller.js";
 import ownerformroutes from "./routes/ownerformroute.js";
+import filteramenitiesroutes from "./routes/filteramenetiesroute.js";
 
 const app = express();
 const port = process.env.PORT || 5000;
@@ -15,6 +16,7 @@ const port = process.env.PORT || 5000;
 connectDB();
 
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cors({
   origin: "http://localhost:5173",
@@ -26,6 +28,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use("/api/auth", authRouter);
 app.use("/api/auth/v1", bookingroutes);
 app.use("/api/ownerform",ownerformroutes)
+app.use('/api/auth/filters',filteramenitiesroutes);
 
 app.use((err, req, res, next) => {
   console.error("GLOBAL ERROR:");
